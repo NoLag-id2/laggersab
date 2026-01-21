@@ -20,30 +20,35 @@ for _, v in pairs(game:GetDescendants()) do
 end
 
 
+-- ASSURE que la variable existe
+getgenv().isLagging = false
+
 local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 
--- UI mobile
+-- UI
 local gui = Instance.new("ScreenGui")
 gui.Name = "MobileToggle"
 gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local button = Instance.new("TextButton")
--- Taille plus petite pour mobile
-button.Size = UDim2.fromScale(0.1, 0.04)  -- 10% largeur, 4% hauteur
--- Toujours en bas à gauche
+button.Size = UDim2.fromScale(0.1, 0.04)
 button.Position = UDim2.fromScale(0.02, 0.92)
 button.Text = "OFF"
 button.BackgroundColor3 = Color3.fromRGB(40,40,40)
 button.TextColor3 = Color3.new(1,1,1)
 button.BorderSizePixel = 0
+button.TextScaled = true
 button.Parent = gui
 
-button.Activated:Connect(function()
-    isLagging = not isLagging
+-- Fonction toggle
+local function toggle()
+    getgenv().isLagging = not getgenv().isLagging
 
-    if isLagging then
+    if getgenv().isLagging then
         button.Text = "ON"
         button.BackgroundColor3 = Color3.fromRGB(0,120,0)
     else
@@ -51,8 +56,13 @@ button.Activated:Connect(function()
         button.BackgroundColor3 = Color3.fromRGB(40,40,40)
     end
 
-    print("test")
-end)
+    warn("isLagging =", getgenv().isLagging)
+end
+
+-- Support MOBILE + PC
+button.MouseButton1Click:Connect(toggle)
+button.TouchTap:Connect(toggle)
+
 
 
 
